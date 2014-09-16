@@ -33,8 +33,11 @@
  * nuclear facility.
  */
 
-/* Modified the original DisplaySystemProps to NOT cut the output after some characters.
+/* 
+ * Changes by: Christian Lauf
+ * Modified the original DisplaySystemProps to NOT cut the output after some characters.
  * This is esspecially important when the error is inside some Java PATH. 
+ *
  */
  
 public class DisplaySystemProps {
