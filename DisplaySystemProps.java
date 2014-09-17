@@ -38,6 +38,10 @@
  * Modified the original DisplaySystemProps to NOT cut the output after some characters.
  * This is esspecially important when the error is inside some Java PATH. 
  *
+ * Compile with: javac DisplaySystemProps.java
+ *  - You will get DisplaySystemProps.class
+ * Execute with: java DisplaySystemProps
+ *
  */
  
 public class DisplaySystemProps {
