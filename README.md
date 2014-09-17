@@ -1,3 +1,6 @@
+#### Legal stuff
+Look into each file for the LICENSE as some scripts are vendor based and licensed differently (for example DisplaySystemProps.java)
+
 scripts
 =======
 Scripts &amp; tools for daily usage
