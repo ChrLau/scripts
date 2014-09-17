@@ -42,6 +42,9 @@
  *  - You will get DisplaySystemProps.class
  * Execute with: java DisplaySystemProps
  *
+ * TODO:
+ *  - How to specify path to the JVM if multiple Java versions / JVMs are running on the system?
+ *
  */
  
 public class DisplaySystemProps {
