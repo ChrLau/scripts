@@ -1,5 +1,5 @@
 #### Legal stuff
-Look into each file for the LICENSE as some scripts are vendor based and licensed differently (for example DisplaySystemProps.java)
+Look into each file for the license they are released under, as some scripts are vendor based and licensed differently (for example DisplaySystemProps.java)
 
 scripts
 =======
