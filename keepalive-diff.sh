@@ -6,13 +6,13 @@
 # Useful for first troubleshooting or when doing config rollouts
 
 # Set this to the username you wish to use:
-sshuser = $USER
+SSHUSER=$USER
 
 if [ "$#" != "1" ]; then
-  echo "Usage: $0 hostname (without node-identifier)\nExample: $0 ipkeepalive05 (for diffing ipkeepalive05a and ipkeepalive05b)" 
+  echo -e "Usage: $0 hostname (without node-identifier)\nExample: $0 ipkeepalive05 (for diffing ipkeepalive05a and ipkeepalive05b)" 
   exit 1
 fi
 
 echo "Diffing: $1"
 echo 
-diff -B -y --suppress-common-lines <(ssh $sshuser@${1}a ipvsadm -L -n --sort | cut -c 1-40) <(ssh $sshuser@${1}b ipvsadm -L -n --sort | cut -c 1-40)
+diff -B -y --suppress-common-lines <(ssh $SSHUSER@${1}a ipvsadm -L -n --sort | cut -c 1-40) <(ssh $SSHUSER@${1}b ipvsadm -L -n --sort | cut -c 1-40)
