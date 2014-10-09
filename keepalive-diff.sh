@@ -6,6 +6,7 @@
 # Useful for first troubleshooting or when doing config rollouts
 
 # Set this to the username you wish to use:
+# Default is executing user
 SSHUSER=$USER
 
 if [ "$#" != "1" ]; then
