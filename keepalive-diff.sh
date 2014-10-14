@@ -16,4 +16,4 @@ fi
 
 echo -e "Diffing: $1\n"
 
-diff -B -y --suppress-common-lines <(ssh $SSHUSER@${1}a ipvsadm -L -n --sort | cut -c 1-40) <(ssh $SSHUSER@${1}b ipvsadm -L -n --sort | cut -c 1-40)
+diff -B -y --suppress-common-lines <(ssh "$SSHUSER"@"${1}a" ipvsadm -L -n --sort | cut -c 1-40) <(ssh "$SSHUSER"@"${1}b" ipvsadm -L -n --sort | cut -c 1-40)
