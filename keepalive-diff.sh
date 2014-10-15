@@ -11,7 +11,7 @@ if [ -n "$2" ]; then
   # If a username is provided as 2nd argument, we use that one
   SSHUSER=$2
 else
-  # Default is executing user
+  # Default is the executing user
   SSHUSER=$USER
 fi
 
