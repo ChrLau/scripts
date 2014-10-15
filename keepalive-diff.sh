@@ -8,7 +8,7 @@
 HOST=$1
 
 if [ -n "$2" ]; then
-  # Set this to the username you wish to use:
+  # If a username is provided as 2nd argument, we use that one
   SSHUSER=$2
 else
   # Default is executing user
