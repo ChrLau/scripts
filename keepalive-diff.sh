@@ -22,6 +22,6 @@ if [ "$#" != "1" ]; then
   exit 1
 fi
 
-echo -e "Diffing: $1\n"
+echo -e "Diffing: $HOST\n"
 
 diff -B -y --suppress-common-lines <(ssh "$SSHUSER@${HOST}a" ipvsadm -L -n --sort | cut -c 1-40) <(ssh "$SSHUSER@${HOST}b" ipvsadm -L -n --sort | cut -c 1-40)
