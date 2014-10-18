@@ -7,7 +7,12 @@
 
 HOST=$1
 
-if [ -n "$2" ]; then
+# No arguments? Print help
+if [ "$#" -eq  "0" ]; then
+  echo -e "Usage: $0 hostname [user]\nExample: $0 ipkeepalive05 (for diffing ipkeepalive05a and ipkeepalive05b)\nUsername is optional." 
+  exit 1
+# 2nd arugment is not zero chars long? Use that as username
+elif [ -n "$2" ]; then
   # If a username is provided as 2nd argument, we use that one
   SSHUSER=$2
 else
@@ -15,12 +20,6 @@ else
   SSHUSER=$USER
 fi
 
-
-
-if [ "$#" != "1" ]; then
-  echo -e "Usage: $0 hostname [user]\nExample: $0 ipkeepalive05 (for diffing ipkeepalive05a and ipkeepalive05b)\nUsername is optional." 
-  exit 1
-fi
 
 echo -e "Diffing: $HOST\n"
 
