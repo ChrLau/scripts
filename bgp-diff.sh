@@ -43,5 +43,5 @@ fi
 
 echo -e "Diffing: $1\n"
 
-diff -B -y --suppress-common-lines <(ssh "$SSHUSER"@"${1}a" vtysh -c 'show ip bgp summary' | cut -c 1-90) <(ssh "$SSHUSER"@"${1}b" vtysh -c 'show ip bgp summary' | cut -c 1-90)
+diff -B -y --suppress-common-lines <(ssh "$SSHUSER@${1}a" vtysh -c 'show ip bgp summary' | cut -c 1-90) <(ssh "$SSHUSER@${1}b" vtysh -c 'show ip bgp summary' | cut -c 1-90)
 
