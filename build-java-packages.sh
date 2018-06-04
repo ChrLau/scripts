@@ -4,7 +4,7 @@
 
 SCRIPT="$(basename "$0")"
 SCRIPT_VERSION="1.0"
-PACKAGES_DIR="/home/$USER/packages"
+PACKAGES_DIR="$HOME/packages"
 PACKAGES_TMP_DIR="$PACKAGES_DIR/tmp"
 
 function HELP {
