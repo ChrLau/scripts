@@ -91,7 +91,7 @@ fi
 
 cd "$PACKAGES_DIR" || exit
 
-yes | fakeroot make-jpkg --with-system-certs --full-name "ITOEBIZ Build Script" --email "ito-team-hosting-application@1und1.de" "$PACKAGES_DIR/$TARFILE" >> "$PACKAGES_TMP_DIR/$TARFILE-make-jpkg.log" 2>&1
+yes | fakeroot make-jpkg --with-system-certs --full-name "Java package Build Script" --email "useful-email-address@example.com" "$PACKAGES_DIR/$TARFILE" >> "$PACKAGES_TMP_DIR/$TARFILE-make-jpkg.log" 2>&1
 
 # Check the returncode and set DEBFILE
 if [ "$?" -eq 0 ]; then
