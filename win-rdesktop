@@ -10,7 +10,7 @@ ANNOYING_WINDOW=$PPID
 
 # Old xfreerdp command. Unusable currently, as it doesn't support newer SSL ciphers..
 #setsid xfreerdp --plugin cliprdr -a 16 -k de -g 1440x900 -u $USER -d UNITED -p "$mypassword" --ignore-certificate winserver.domain.tld &
-setsid rdesktop -u clauf -d DOMAIN -p $mypassword -g 1440x900 -k de -a 16 winserver.domain.tld &
+setsid rdesktop -u $USER -d DOMAIN -p $mypassword -g 1440x900 -k de -a 16 winserver.domain.tld &
 
 # Now we can kill it, after the process doesnt need it anymore
 sleep 5 && kill -15 $ANNOYING_WINDOW
