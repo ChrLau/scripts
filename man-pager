@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#escape='\e'
+
+# Colored manpages
+# CHANGE FIRST NUMBER PAIR FOR COMMAND AND FLAG COLOR
+# currently 1;31 which is bold red
+export LESS_TERMCAP_md=$'\e[1;31;74m' # begin bold
+# CHANGE FIRST NUMBER PAIR FOR PARAMETER COLOR
+# currently 0;32 which is green
+export LESS_TERMCAP_us=$'\e[1;32;146m' # begin underline
+# don't change anything here
+export LESS_TERMCAP_mb=$'\e[1;31m' # begin blinking
+export LESS_TERMCAP_me=$'\e[0m' # turn off bold, blink and underline
+export LESS_TERMCAP_se=$'\e[0m' # stop standard out
+export LESS_TERMCAP_so=$'\e[1;36;246m' # begin standout-mode - info box and search results
+export LESS_TERMCAP_ue=$'\e[0m' # end underline
+
+exec less "$@"
