@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Checks if keepalived has the MASTER or BACKUP state
+# Note: Currently assumes there is only 1 virtual_ipaddress block in the whole config with only 1 IPv4 IP
+
 keepalivedps=$(pgrep -u root -f "/usr/sbin/keepalived" -c)
 keepalivedconf="/etc/keepalived/keepalived.conf"
 # Set checkifup to be NOT 0 or 1 so the if statement will fail if it's not set
