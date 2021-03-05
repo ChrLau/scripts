@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # Checks if keepalived has the MASTER or BACKUP state
-# Note: Currently assumes there is only 1 virtual_ipaddress block in the whole config with only 1 IPv4 IP
+# Note: Script currently assumes that:
+#  - There is only 1 virtual_ipaddress block in the whole keepalived config file
+#  - The virtual_ipaddress block has only 1 IPv4 IP configured
+#  - This configured IP is only present on a network interface if the node has the state MASTER
+#    (Which is the normal behaviour anyway, but I've seen weird stuff..)
 
 keepalivedps=$(pgrep -u root -f "/usr/sbin/keepalived" -c)
 keepalivedconf="/etc/keepalived/keepalived.conf"
