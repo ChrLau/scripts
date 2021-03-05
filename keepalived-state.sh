@@ -11,14 +11,14 @@ keepalivedps=$(pgrep -u root -f "/usr/sbin/keepalived" -c)
 keepalivedconf="/etc/keepalived/keepalived.conf"
 # Set checkifup to be NOT 0 or 1 so the if statement will fail if it's not set
 checkifup=3
-state=""
+RD_OPTION_STATE=""
 
 # Check for optional command line parameter
 if [[ -n "$1" ]]; then
 
   # Enforce precise naming
   if [[ "$1" == "MASTER" ]] || [[ "$1" == "BACKUP" ]]; then
-    state="$1"
+    RD_OPTION_STATE="$1"
   else
     echo "Valid parameters (case-sensitive) are: MASTER or BACKUP"
     echo "Note: If a parameter is given script will exit with 0 if given state matches keepaliveds running state."
@@ -35,7 +35,7 @@ if [[ "$keepalivedps" -gt 1 ]]; then
   if [[ -r $keepalivedconf ]]; then
     virtualip=$(grep 'virtual_ipaddress {' -A 10 $keepalivedconf | grep -B 500 -m1 "}" | grep -Eo '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' )
     virtualipnr=$(echo -n "$virtualip" | grep -c '^')
-    
+
     if [[ "$virtualipnr" -eq 1 ]]; then
       checkifup=$(ip a |grep -cPo "$virtualip/")
 
@@ -43,23 +43,16 @@ if [[ "$keepalivedps" -gt 1 ]]; then
         role=MASTER
       elif [[ "$checkifup" -eq 0 ]]; then
         role=BACKUP
-
-        if [[ -n "$state" ]]; then
-
-          if [[ "$state" == "$role" ]]; then
-            echo "Given state matches running state"
-            exit 0
-          else
-            echo "Given state does not match running state"
-            exit 1
-          fi
-
-        else
-          echo "Role: $role"
-        fi
-
       else
         echo "Couldn't check if node is MASTER or BACKUP (checkifup is not 0 or 1). Aborting."
+        exit 1
+      fi
+
+      if [[ "$RD_OPTION_STATE" == "$role" ]]; then
+        echo "Given state $RD_OPTION_STATE matches running state $role"
+        exit 0
+      else
+        echo "Given state $RD_OPTION_STATE does not match running state $role"
         exit 1
       fi
 
