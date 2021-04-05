@@ -22,8 +22,8 @@
 ##############################
 
 # Refuse spoofed packets pretending to be from your IP address.
--A INPUT -i enp0s31f6 -s 94.130.66.236 -m comment --comment "FW: Spoof Own-IP" -j LOG --log-prefix "FW: Spoof Own-IP "
--A INPUT -i enp0s31f6 -s 94.130.66.236 -j DROP -m comment --comment "FW: Spoof Own-IP"
+-A INPUT -i enp0s31f6 -s ip.ip.ip.ip -m comment --comment "FW: Spoof Own-IP" -j LOG --log-prefix "FW: Spoof Own-IP "
+-A INPUT -i enp0s31f6 -s ip.ip.ip.ip -j DROP -m comment --comment "FW: Spoof Own-IP"
 
 # Refuse packets claiming to be from a Class A private network.
 -A INPUT -i enp0s31f6 -s 10.0.0.0/8 -j LOG --log-prefix "FW: Spoof ClassA-IP "
