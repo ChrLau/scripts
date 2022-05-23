@@ -3,7 +3,7 @@
 # Small script to automate custom shell command execution
 
 VERSION="0.1"
-SCRIPT=$(basename $0)
+SCRIPT=$(basename "$0")
 SSH=$(which ssh)
 
 # Test if ssh is present and executeable
@@ -14,7 +14,7 @@ fi
 
 function HELP {
   echo "$SCRIPT $VERSION: Execute custom shell commands on lists of hosts"
-  echo "Usage: $SCRIPT -l /path/to/host.list -c "command" [-u <user>] [-a] [-r]"
+  echo "Usage: $SCRIPT -l /path/to/host.list -c \"command\" [-u <user>] [-a] [-r]"
   echo ""
   echo "Parameters:"
   echo " -l   Path to the hostlist file, 1 host per line"
