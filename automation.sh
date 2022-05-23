@@ -82,7 +82,7 @@ fi
 if [ -z "$ABORT" ]; then
   # If empty, set to YES (default)
   ABORT="YES"
-# That if it's not NO or YES
+# Check if it's not NO or YES - we want to ensure a definite decision here
 elif [ "$ABORT" != "NO" ] && [ "$ABORT" != "YES" ]; then
   echo  "-a accepts either YES or NO (case-sensitive)"
   exit 1;
