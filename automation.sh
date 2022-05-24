@@ -109,7 +109,7 @@ if [ -r "$HOSTLIST" ]; then
       if [ "$SUDO" = "YES" ]; then
         ssh -n -o ConnectTimeout=10 "$SSH_USER"@"$HOST" "sudo su -c '$COMMAND'";
       else
-        ssh -n -o ConnectTimeout=10 "$SSH_USER"@"$HOST" "'$COMMAND'";
+        ssh -n -o ConnectTimeout=10 "$SSH_USER"@"$HOST" "$COMMAND";
       fi
 
       # Test if command was successful
