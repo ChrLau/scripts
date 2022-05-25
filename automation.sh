@@ -23,6 +23,7 @@ function HELP {
   echo " -u   (Optional) The user used during SSH-Connection. (Default: \$USER)"
   echo " -a   (Optional) Abort when the ssh-command fails? Use YES or NO (Default: YES)"
   echo " -r   (Optional) When given command will be executed via 'sudo su -c'"
+#TODO  echo " -i   (Optional) Path to the SSH IdentityFile which should be used" 
   echo ""
   echo "No arguments or -h will print this help."
   exit 0;
