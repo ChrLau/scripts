@@ -3,9 +3,13 @@
 #
 # Small script to automate custom shell command execution
 
-VERSION="0.1"
+VERSION="1.1"
 SCRIPT=$(basename "$0")
 SSH=$(which ssh)
+# Colored output
+RED="\e[31m"
+GREEN="\e[32m"
+ENDCOLOR="\e[0m"
 
 # Test if ssh is present and executeable
 if [ ! -x "$SSH" ]; then
@@ -15,7 +19,7 @@ fi
 
 function HELP {
   echo "$SCRIPT $VERSION: Execute custom shell commands on lists of hosts"
-  echo "Usage: $SCRIPT -l /path/to/host.list -c \"command\" [-u <user>] [-a] [-r]"
+  echo "Usage: $SCRIPT -l /path/to/host.list -c "command" [-u <user>] [-a] [-r] [-s "options"]"
   echo ""
   echo "Parameters:"
   echo " -l   Path to the hostlist file, 1 host per line"
@@ -23,7 +27,8 @@ function HELP {
   echo " -u   (Optional) The user used during SSH-Connection. (Default: \$USER)"
   echo " -a   (Optional) Abort when the ssh-command fails? Use YES or NO (Default: YES)"
   echo " -r   (Optional) When given command will be executed via 'sudo su -c'"
-#TODO  echo " -i   (Optional) Path to the SSH IdentityFile which should be used" 
+  echo " -s   (Optional) Any SSH parameters you want to specify Needs to be in double-quotes. (Default: empty)"
+  echo "                 Example: -s \"-i /home/user/.ssh/id_user\""
   echo ""
   echo "No arguments or -h will print this help."
   exit 0;
@@ -35,7 +40,7 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # Parse arguments
-while getopts ":l:c:u:a:hr" OPTION; do
+while getopts ":l:c:u:a:hrs:" OPTION; do
   case "$OPTION" in
     l)
       HOSTLIST="${OPTARG}"
@@ -51,6 +56,9 @@ while getopts ":l:c:u:a:hr" OPTION; do
       ;;
     r)
       SUDO="YES"
+      ;;
+    s)
+      SSH_PARAMS="${OPTARG}"
       ;;
     h)
       HELP
@@ -90,7 +98,6 @@ elif [ "$ABORT" != "NO" ] && [ "$ABORT" != "YES" ]; then
   exit 1;
 fi
 
-
 # Check if hostlist is readable
 if [ -r "$HOSTLIST" ]; then
   # Check that hostlist is not 0 bytes
@@ -102,39 +109,39 @@ if [ -r "$HOSTLIST" ]; then
 
       # getent returns exit code of 2 if a hostname isn't resolving
       if [ "$?" -ne 0 ]; then
-        echo "Host: $HOST is not resolving. Typo? Aborting."
+        echo -e "${RED}Host: $HOST is not resolving. Typo? Aborting.${ENDCOLOR}"
         exit 2
       fi
 
-      echo "Connecting to $HOST ...";
+      echo -e "${GREEN}Connecting to $HOST ...${ENDCOLOR}";
       # Execute command via sudo or not?
       if [ "$SUDO" = "YES" ]; then
-        ssh -n -o ConnectTimeout=10 "$SSH_USER"@"$HOST" "sudo su -c '$COMMAND'";
+        ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "sudo su -c '${COMMAND}'";
       else
-        ssh -n -o ConnectTimeout=10 "$SSH_USER"@"$HOST" "$COMMAND";
+        ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "${COMMAND}";
       fi
 
       # Test if command was successful
       if [ "$?" -ne 0 ]; then
-        echo -n "Command was NOT successful on $HOST"
+        echo -n -e "${RED}Command was NOT successful on $HOST.${ENDCOLOR}"
 
         # Shall we proceed or not?
         if [ "$ABORT" = "YES" ]; then
-          echo -n -e "... Aborting.\n"
+          echo -n -e "${RED}... Aborting.${ENDCOLOR}\n"
           exit 1
         else
-          echo -n -e "... Proceeding, as configured.\n"
+          echo -n -e "${GREEN}... Proceeding, as configured.${ENDCOLOR}\n"
         fi
       fi
 
     done
 
   else
-    echo "Host \"$HOSTLIST\" is empty. Exiting."
+    echo -e "${RED}Hostlist \"$HOSTLIST\" is empty. Exiting.${ENDCOLOR}"
     exit 1
   fi
 
 else
-  echo "Hostlist \"$HOSTLIST\" is not readable. Exiting."
+  echo -e "${RED}Hostlist \"$HOSTLIST\" is not readable. Exiting.${ENDCOLOR}"
   exit 1
 fi
