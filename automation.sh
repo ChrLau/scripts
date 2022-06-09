@@ -25,7 +25,7 @@ function HELP {
   echo " -l   Path to the hostlist file, 1 host per line"
   echo " -c   The command to execute. Needs to be in double-quotes. Else getops interprets it as separate arguments"
   echo " -u   (Optional) The user used during SSH-Connection. (Default: \$USER)"
-  echo " -a   (Optional) Abort when the ssh-command fails? Use YES or NO (Default: YES)"
+  echo " -a   (Optional) Abort run when the execution fails on a host? Use YES or NO (Default: YES)"
   echo " -r   (Optional) When given command will be executed via 'sudo su -c'"
   echo " -s   (Optional) Any SSH parameters you want to specify Needs to be in double-quotes. (Default: empty)"
   echo "                 Example: -s \"-i /home/user/.ssh/id_user\""
