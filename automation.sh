@@ -123,14 +123,14 @@ if [ -r "$HOSTLIST" ]; then
 
       # Test if command was successful
       if [ "$?" -ne 0 ]; then
-        echo -n -e "${RED}Command was NOT successful on $HOST.${ENDCOLOR}"
+        echo -n -e "${RED}Command was NOT successful on $HOST... ${ENDCOLOR}"
 
         # Shall we proceed or not?
         if [ "$ABORT" = "YES" ]; then
-          echo -n -e "${RED}... Aborting.${ENDCOLOR}\n"
+          echo -n -e "${RED}Aborting.${ENDCOLOR}\n"
           exit 1
         else
-          echo -n -e "${GREEN}... Proceeding, as configured.${ENDCOLOR}\n"
+          echo -n -e "${GREEN}Proceeding, as configured.${ENDCOLOR}\n"
         fi
       fi
 
