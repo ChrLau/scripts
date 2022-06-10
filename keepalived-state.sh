@@ -60,7 +60,7 @@ if [[ "$keepalivedps" -gt 1 ]]; then
       echo "More than 1 virtual_ipaddress found in $keepalivedconf. Script currently can't safely handle this. Aborting."
       exit 1
     else
-      echo "virtual_ipaddress not found in /etc/keepalived/keepalived.conf. Aborting."
+      echo "virtual_ipaddress not found in $keepalivedconf. Aborting."
       exit 1
     fi
 
