@@ -166,7 +166,7 @@ if [ -r "$HOSTLIST" ]; then
 
         # Test if ssh-command was successful
         if [ "$?" -ne 0 ]; then
-          echo -n -e "${RED}Command was NOT successful on $HOST.${ENDCOLOR}" 2>&1 | tee -a "$LOGFILE"
+          echo -n -e "${RED}Command was NOT successful on $HOST ${ENDCOLOR}" 2>&1 | tee -a "$LOGFILE"
 
           # Shall we proceed or not?
           if [ "$ABORT" = "YES" ]; then
@@ -184,7 +184,7 @@ if [ -r "$HOSTLIST" ]; then
 
         # Test if ssh-command was successful
         if [ "$?" -ne 0 ]; then
-          echo -n -e "${RED}Command was NOT successful on $HOST.${ENDCOLOR}"
+          echo -n -e "${RED}Command was NOT successful on $HOST ${ENDCOLOR}"
 
           # Shall we proceed or not?
           if [ "$ABORT" = "YES" ]; then
