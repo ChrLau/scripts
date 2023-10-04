@@ -3,7 +3,7 @@
 #
 # Small script to automate custom shell command execution
 
-VERSION="1.1"
+VERSION="1.2"
 SCRIPT="$(basename "$0")"
 SSH="$(which ssh)"
 TEE="$(which tee)"
@@ -18,14 +18,14 @@ if [ ! -x "$SSH" ]; then
   exit 2;
 fi
 
-# Test if tee is presentn and executeable
+# Test if tee is present and executeable
 if [ ! -x "$TEE" ]; then
   echo "${RED}tee not found.${ENDCOLOR} ${GREEN}Script can still be used,${ENDCOLOR} ${RED}but option -w CAN NOT be used.${ENDCOLOR}"
 fi
 
 function HELP {
   echo "$SCRIPT $VERSION: Execute custom shell commands on lists of hosts"
-  echo "Usage: $SCRIPT -l /path/to/host.list -c "command" [-u <user>] [-a] [-r] [-s "options"] [-w "/path/to/logfile.log"]"
+  echo "Usage: $SCRIPT -l /path/to/host.list -c "command" [-u <user>] [-a <YES|NO>] [-r] [-s "options"] [-w "/path/to/logfile.log"]"
   echo ""
   echo "Parameters:"
   echo " -l   Path to the hostlist file, 1 host per line"
