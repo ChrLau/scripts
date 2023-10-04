@@ -166,14 +166,14 @@ if [ -r "$HOSTLIST" ]; then
 
         # Test if ssh-command was successful
         if [ "$?" -ne 0 ]; then
-          echo -n -e "${RED}Command was NOT successful on $HOST ${ENDCOLOR}" 2>&1 | tee -a "$LOGFILE"
+          echo -n -e "${RED}Command was NOT successful on $HOST ... ${ENDCOLOR}" 2>&1 | tee -a "$LOGFILE"
 
           # Shall we proceed or not?
           if [ "$ABORT" = "YES" ]; then
-            echo -n -e "${RED}... Aborting.${ENDCOLOR}\n" 2>&1 | tee -a "$LOGFILE"
+            echo -n -e "${RED}Aborting.${ENDCOLOR}\n" 2>&1 | tee -a "$LOGFILE"
             exit 1
           else
-            echo -n -e "${GREEN}... Proceeding, as configured.${ENDCOLOR}\n" 2>&1 | tee -a "$LOGFILE"
+            echo -n -e "${GREEN}Proceeding, as configured.${ENDCOLOR}\n" 2>&1 | tee -a "$LOGFILE"
           fi
         fi
 
@@ -184,14 +184,14 @@ if [ -r "$HOSTLIST" ]; then
 
         # Test if ssh-command was successful
         if [ "$?" -ne 0 ]; then
-          echo -n -e "${RED}Command was NOT successful on $HOST ${ENDCOLOR}"
+          echo -n -e "${RED}Command was NOT successful on $HOST ... ${ENDCOLOR}"
 
           # Shall we proceed or not?
           if [ "$ABORT" = "YES" ]; then
-            echo -n -e "${RED}... Aborting.${ENDCOLOR}\n"
+            echo -n -e "${RED}Aborting.${ENDCOLOR}\n"
             exit 1
           else
-            echo -n -e "${GREEN}... Proceeding, as configured.${ENDCOLOR}\n"
+            echo -n -e "${GREEN}Proceeding, as configured.${ENDCOLOR}\n"
           fi
         fi
 
