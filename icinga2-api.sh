@@ -45,6 +45,8 @@ elif [ "$#" -eq 1 ]; then
 
   HOST="$1"
   results=$($CURL -s -u $ICINGA2_API_USER:$ICINGA2_API_PASSWORD -H 'Accept: application/json' -H 'X-HTTP-Method-Override: GET' -X POST -k "https://$ICINGA2_API_HOST:$ICINGA2_API_PORT/v1/objects/services/" -d '{"filter": "match(\"'"$HOST"'\",host.name)", "attrs": ["__name", "state", "action_url", "last_check_result"] }')
+  # Get services based on service name
+  #results=$($CURL -s -u $ICINGA2_API_USER:$ICINGA2_API_PASSWORD -H 'Accept: application/json' -H 'X-HTTP-Method-Override: GET' -X POST -k "https://$ICINGA2_API_HOST:$ICINGA2_API_PORT/v1/objects/services/" -d '{"filter": "match(\"'"$HOST"'\",service.name)", "attrs": ["__name", "state", "action_url", "last_check_result"] }')
 
   echo "$results" | "$JSON_PP"
 
