@@ -90,6 +90,50 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' $BASHRC
 
 done
 
+for DOTFILEUSER in root clauf; do
+  HOMEDIR=$(getent passwd $DOTFILEUSER | cut -d: -f6 )
+
+  # .vimrc
+  cat <<VIMRCEOF > $HOMEDIR/.vimrc
+syntax on
+set nu
+set paste
+set mouse=
+set autoindent
+set modeline
+" Fix color scheme which can be hard to read on some TTYs
+color desert
+" Convert tabs to spaces:
+"set expandtab
+VIMRCEOF
+
+  # .htoprc
+  cat <<HTOPRCEOF > $HOMEDIR/.htoprc ;
+# Beware! This file is rewritten every time htop exits.
+# The parser is also very primitive, and not human-friendly.
+# (I know, it's in the todo list).
+fields=0 3 48 2 17 18 38 39 40 2 46 47 49 1
+sort_key=46
+sort_direction=1
+hide_threads=0
+hide_kernel_threads=0
+hide_userland_threads=0
+shadow_other_users=0
+highlight_base_name=1
+highlight_megabytes=1
+tree_view=1
+header_margin=1
+color_scheme=5
+delay=15
+left_meters=AllCPUs Memory Swap
+left_meter_modes=2 2 2
+right_meters=Tasks LoadAverage Uptime Clock
+right_meter_modes=2 2 2 2 
+HTOPRCEOF
+
+# The closing ; is in the "cat <<HTOPRCEOF > $HOMEDIR/.htoprc ;" line..
+done
+
 # FAI website can't set SSH-Keys for individual users. So we use this.
 mkdir /home/clauf/.ssh && chmod 0700 /home/clauf/.ssh && cp /root/.ssh/authorized_keys /home/clauf/.ssh/authorized_keys && chown clauf:clauf -R /home/clauf/.ssh
 
