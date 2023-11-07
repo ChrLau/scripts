@@ -89,7 +89,7 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' $BASHRC
 done
 
 # FAI website can't set SSH-Keys for individual users. So we use this.
-mkdir /home/clauf/.ssh && chmod 0700 /home/clauf/.ssh && cp /root/.ssh/authorized_keys /home/clauf/.ssh/ && chown clauf:clauf -R /home/clauf/.ssh
+mkdir /home/clauf/.ssh && chmod 0700 /home/clauf/.ssh && cp /root/.ssh/authorized_keys /home/clauf/.ssh/authorized_keys && chown clauf:clauf -R /home/clauf/.ssh
 
 # Update package lists
 apt-get update
