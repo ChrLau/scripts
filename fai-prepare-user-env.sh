@@ -173,8 +173,8 @@ INTERFACE=$(ip -o -4 route show to default | awk '{print $5}')
 #echo "INTERFACE: $INTERFACE"
 
 # Save old network config
-if [ -f /etc/network/interfaces ]; then
-  cp /etc/network/interfaces /etc/network/interfaces.scriptcopy
+if [ -f /etc/network/interfaces.d/$INTERFACE ]; then
+  cp /etc/network/interfaces.d/$INTERFACE /etc/network/interface-$INTERFACE.scriptcopy
 fi
 
 # Write new config
@@ -184,7 +184,7 @@ cat <<NETWORKEOF > /etc/network/interfaces.d/$INTERFACE
 
 # The primary network interface
 auto $INTERFACE
-allow-hotplug $INTERFACE
+#allow-hotplug $INTERFACE
 iface $INTERFACE inet static
   address $IP
   netmask 255.255.255.0
