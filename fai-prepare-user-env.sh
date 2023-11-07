@@ -1,5 +1,5 @@
 # To be run after FAI (https://fai-project.org) image installation
-# Test with:
+# Tested with:
 # - Debian Bookworm
 # Configures:
 # - Timezone
@@ -10,6 +10,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Debconf selections DB is: /var/cache/debconf/config.dat
 # Timezone: UTC
 echo "tzdata tzdata/Zones/Etc select UTC" | debconf-set-selections
 # Keyboard Layout: DE
