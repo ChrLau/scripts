@@ -150,7 +150,7 @@ apt-get update
 # Generate static IPv4 network config
 # We use nmap to scan a given static IPv4-Range and use the first IP marked as DOWN which has an DNS-Record
 NMAP="$(which nmap)"
-# Test if ssh is present and executeable
+# Test if nmap is present and executeable
 if [ ! -x "$NMAP" ]; then
   echo "This script requires nmap. Exiting."
   exit 2;
