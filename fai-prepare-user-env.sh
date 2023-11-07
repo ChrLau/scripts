@@ -8,6 +8,10 @@
 # - $EDITOR variable
 # - .bashrc
 
+# Packages included in FAI:
+# tmux htop mc unzip vim sudo debconf-utils qemu-guest-agent
+
+
 export DEBIAN_FRONTEND=noninteractive
 
 # Debconf selections DB is: /var/cache/debconf/config.dat
@@ -83,3 +87,6 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' $BASHRC
   sed -i '/^    PS1=.*033.*/c\    PS1=\x27\${debian_chroot:+(\$debian_chroot)}\\\[\\033\[1;34m\\\]\\u\\\[\\033\[0m\\\]@\\\[\\033\[1;35m\\\]\\h\\\[\\033\[0m\\\]:\\\[\\033\[1;32m\\\]\\w\\\[\\033\[0m\\\]\\\$ \x27' $BASHRC;
 
 done
+
+# Update package lists
+apt-get update
