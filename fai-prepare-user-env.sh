@@ -88,5 +88,13 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"' $BASHRC
 
 done
 
+# FAI website can't set SSH-Keys for individual users. So we use this.
+mkdir /home/clauf/.ssh && chmod 0700 /home/clauf/.ssh && cp /root/.ssh/authorized_keys /home/clauf/.ssh/ && chown clauf:clauf -R /home/clauf/.ssh
+
 # Update package lists
 apt-get update
+
+# TODO:
+# 1. Get next free IP (from where?)
+# 2. Make network configuration static (at least for IPv4)
+# 3. Set hostname according to DNS (/etc/hosts & /etc/hostname)
