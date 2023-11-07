@@ -157,7 +157,7 @@ if [ ! -x "$NMAP" ]; then
 fi
 
 # -R is important, else no DNS-Resolution for hosts marked as DOWN
-FIRST_DOWN_HOST=$(nmap -v -sn -R 192.168.178.20-49 -oG - | grep -m1 -oP "^Host:[[:space:]]192\.168\.178\.[0-9]{2}[[:space:]]\([a-zA-Z0-9\-]+\.lan\)[[:space:]]Status: Down")
+FIRST_DOWN_HOST=$(nmap -v -sn -R 192.168.178.21-49 -oG - | grep -m1 -oP "^Host:[[:space:]]192\.168\.178\.[0-9]{2}[[:space:]]\([a-zA-Z0-9\-]+\.lan\)[[:space:]]Status: Down")
 #echo "FIRST_DOWN_HOST: $FIRST_DOWN_HOST"
 
 IP=$(awk '{print $2}' <<<$FIRST_DOWN_HOST)
