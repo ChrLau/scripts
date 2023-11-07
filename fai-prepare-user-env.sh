@@ -1,15 +1,22 @@
-# To be run after FAI (https://fai-project.org) image installation
+# To be included into your FAI image (https://fai-project.org)
+# Source: https://github.com/ChrLau/scripts/edit/master/fai-prepare-user-env.sh
+#
 # Tested with:
-# - Debian Bookworm
+# - Debian 12 (Bookworm)
 # Configures:
 # - Timezone
 # - Keyboard layout
 # - Locales
 # - $EDITOR variable
-# - .bashrc
+# - .bashrc / .vimrc / .htoprc
+# - Static IPv4 network config
+# - /etc/hosts & /etc/hostname
 
 # Packages included in FAI:
-# tmux htop mc unzip vim sudo debconf-utils qemu-guest-agent
+# tmux htop mc unzip vim nmap sudo debconf-utils qemu-guest-agent
+# - nmap is needed for network config
+# - debconf-utils for debconf-set-selections
+# - qemu-guest-agent for Proxmox VMs
 
 
 export DEBIAN_FRONTEND=noninteractive
@@ -141,6 +148,7 @@ mkdir /home/clauf/.ssh && chmod 0700 /home/clauf/.ssh && cp /root/.ssh/authorize
 apt-get update
 
 # Generate static IPv4 network config
+# We use nmap to scan a given static IPv4-Range and use the first IP marked as DOWN which has an DNS-Record
 NMAP="$(which nmap)"
 # Test if ssh is present and executeable
 if [ ! -x "$NMAP" ]; then
@@ -148,6 +156,7 @@ if [ ! -x "$NMAP" ]; then
   exit 2;
 fi
 
+# -R is important, else no DNS-Resolution for hosts marked as DOWN
 FIRST_DOWN_HOST=$(nmap -v -sn -R 192.168.178.20-49 -oG - | grep -m1 -oP "^Host:[[:space:]]192\.168\.178\.[0-9]{2}[[:space:]]\([a-zA-Z0-9\-]+\.lan\)[[:space:]]Status: Down")
 #echo "FIRST_DOWN_HOST: $FIRST_DOWN_HOST"
 
