@@ -1,4 +1,4 @@
-# To be run after FAI installation
+# To be run after FAI (https://fai-project.org) image installation
 # Test with:
 # - Debian Bookworm
 # Configures:
