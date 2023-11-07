@@ -11,6 +11,8 @@
 export DEBIAN_FRONTEND=noninteractive
 
 # Debconf selections DB is: /var/cache/debconf/config.dat
+
+# MAYBE: cat into separate file and run "debconf-set-selections -c" before to check for errors??
 # Timezone: UTC
 echo "tzdata tzdata/Zones/Etc select UTC" | debconf-set-selections
 # Keyboard Layout: DE
