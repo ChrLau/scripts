@@ -20,17 +20,19 @@ export DEBIAN_FRONTEND=noninteractive
 # Timezone: UTC
 echo "tzdata tzdata/Zones/Etc select UTC" | debconf-set-selections
 # Keyboard Layout: DE
+echo "keyboard-configuration keyboard-configuration/layoutcode string  de" | debconf-set-selections
+echo "keyboard-configuration keyboard-configuration/optionscode string ctrl:nocaps,terminate:ctrl_alt_bksp" | debconf-set-selections
+echo "keyboard-configuration keyboard-configuration/variant select German" | debconf-set-selections
+echo "keyboard-configuration keyboard-configuration/variantcode string" | debconf-set-selections
 echo "keyboard-configuration keyboard-configuration/xkb-keymap select de" | debconf-set-selections
-# Choose UTF-8 locale to be generated
-echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | debconf-set-selections
 # Set UTF-8 as locale
 echo "console-setup console-setup/charmap47 select UTF-8" | debconf-set-selections
 echo "locales locales/default_environment_locale select en_US.UTF-8" | debconf-set-selections
+# Choose UTF-8 locale to be re-generated
+echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | debconf-set-selections
 
 # Set vim as texteditor
 update-alternatives --set editor /usr/bin/vim.basic
-
-
 
 # Thanks StackOverflow! ;-)
 # Search for TEXT_TO_BE_REPLACED and replace it with the text "This line is removed by the admin."
@@ -96,5 +98,8 @@ apt-get update
 
 # TODO:
 # 1. Get next free IP (from where?)
+#  - Ping-loop through defined address space
+#  - First IP which doesn't reply: Take this IP
+#  - Get Hostname from dig -t a IP.IP.IP.IP @internaldns
 # 2. Make network configuration static (at least for IPv4)
 # 3. Set hostname according to DNS (/etc/hosts & /etc/hostname)
