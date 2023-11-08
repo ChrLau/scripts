@@ -184,7 +184,7 @@ cat <<NETWORKEOF > /etc/network/interfaces.d/$INTERFACE
 
 # The primary network interface
 auto $INTERFACE
-#allow-hotplug $INTERFACE
+allow-hotplug $INTERFACE
 iface $INTERFACE inet static
   address $IP
   netmask 255.255.255.0
