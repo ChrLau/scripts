@@ -55,3 +55,20 @@ iface $INTERFACE inet static
 #  netmask 64
 #  gateway fe80::1
 NETWORKEOF
+
+# Set /etc/hosts
+# Only add if not already present
+grep -q "$IP[[:blank:]]$FQDN[[:blank:]]$HOST" /etc/hosts
+
+if [ "$?" -ne 0 ]; then
+  echo "$IP\t$FQDN\t$HOST" >> /etc/hosts
+else
+  echo "/etc/hosts entry already present"
+fi
+
+# Set Hostname - only if variable is not empty
+if [ ! -z $FQDN ]; then
+  echo "$FQDN" > /etc/hostname
+else
+  echo "FQDN is empty"
+fi
