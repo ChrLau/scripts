@@ -25,7 +25,7 @@ getent hosts "${1}a" "${1}b" &> /dev/null
 
 # getent returns exit code of 2 if a hostname isn't resolving
 if [ $? -ne 0 ]; then
-  echo "One of the provided hostnames is not resolving, please check."
+  echo "At least one of the provided hostnames is not resolving, please check."
   exit 2
 fi
 
