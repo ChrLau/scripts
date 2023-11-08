@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This scripts determines the first IP which doesn't reply to ICMP-Pings and has an associated DNS-Record
-# This is used to generated the static network config
+# This is used to generated the static network config /etc/network/interfaces
 VERSION="1.0"
 SCRIPT="$(basename "$0")"
 NMAP="$(which nmap)"
@@ -12,7 +12,7 @@ if [ ! -x "$NMAP" ]; then
   exit 2;
 fi
 
-FIRST_DOWN_HOST=$(nmap -v -sn -R 192.168.178.20-49 -oG - | grep -m1 -oP "^Host:[[:space:]]192\.168\.178\.[0-9]{2}[[:space:]]\([a-zA-Z0-9\-]+\.lan\)[[:space:]]Status: Down")
+FIRST_DOWN_HOST=$(nmap -v -sn -R 192.168.178.21-49 -oG - | grep -m1 -oP "^Host:[[:space:]]192\.168\.178\.[0-9]{2}[[:space:]]\([a-zA-Z0-9\-]+\.lan\)[[:space:]]Status: Down")
 #echo "FIRST_DOWN_HOST: $FIRST_DOWN_HOST"
 
 IP=$(awk '{print $2}' <<<$FIRST_DOWN_HOST)
@@ -33,7 +33,7 @@ if [ -f /etc/network/interfaces ]; then
 fi
 
 # Write new config
-cat <<NETWORKEOF > /etc/network/interfaces2
+cat <<NETWORKEOF > /etc/network/interfaces
 # interfaces(5) file used by ifup(8) and ifdown(8)
 # Include files from /etc/network/interfaces.d:
 source /etc/network/interfaces.d/*
