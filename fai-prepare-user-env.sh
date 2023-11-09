@@ -120,6 +120,7 @@ if [ "$?" -eq 0 ]; then
   chown -R clauf:clauf /home/clauf/git
 
   for DOTFILEUSER in root clauf; do
+
     HOMEDIR=$(getent passwd $DOTFILEUSER | cut -d: -f6 )
 
     # Symlink dotfiles
