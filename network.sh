@@ -2,9 +2,9 @@
 
 # This scripts determines the first IP which doesn't reply to ICMP-Pings and has an associated DNS-Record
 # This is used to generated the static network config /etc/network/interfaces
-VERSION="1.0"
+VERSION="1.1"
 SCRIPT="$(basename "$0")"
-NMAP="$(which nmap)"
+NMAP="$(command -v nmap)"
 
 # Test if ssh is present and executeable
 if [ ! -x "$NMAP" ]; then

@@ -6,13 +6,13 @@
 # This script is useful is you want to "neutralize" some script. Ensuring that it can't be executed/changed.
 # Warning: As this script modifies timestamps and filerights it shouldn't be used as a forensic tool.
 
-VERSION="1.0"
+VERSION="1.1"
 SCRIPT="$(basename "0")"
-CHMOD="$(which chmod)"
-CHOWN="$(which chown)"
-CHATTR="$(which chattr)"
-LSATTR="$(which lsattr)"
-STAT="$(which stat)"
+CHMOD="$(command -v chmod)"
+CHOWN="$(command -v chown)"
+CHATTR="$(command -v chattr)"
+LSATTR="$(command -v lsattr)"
+STAT="$(command -v stat)"
 
 if [ "$#" != "1" ]; then
         echo "Usage: $0 /path/to/file"
