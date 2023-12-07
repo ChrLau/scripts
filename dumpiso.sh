@@ -5,7 +5,7 @@
 # URL: https://github.com/fikovnik/bin-scripts/blob/master/dumpiso.sh
 # Added a bit of error checking
 
-DISKUTIL="$(which diskutil)"
+DISKUTIL="$(command -v diskutil)"
 
 if [ $# != 2 ]; then
 	echo "usage: $0 <device> <name.iso>";

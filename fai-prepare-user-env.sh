@@ -138,7 +138,7 @@ mkdir /home/clauf/.ssh && chmod 0700 /home/clauf/.ssh && cp /root/.ssh/authorize
 
 # Generate static IPv4 network config
 # We use nmap to scan a given static IPv4-Range and use the first IP marked as DOWN which has an DNS-Record
-NMAP="$(which nmap)"
+NMAP="$(command -v nmap)"
 # Test if nmap is present and executeable
 if [ ! -x "$NMAP" ]; then
   echo "This script requires nmap. Exiting."
