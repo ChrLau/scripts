@@ -12,11 +12,11 @@ CSR=$1
 if [ $# -ne 1 ]; then
     echo "Usage: sign.sign <whatever>.csr"; exit 1
 fi
-if [ ! -f $CSR ]; then
+if [ ! -f "$CSR" ]; then
     echo "CSR not found: $CSR"; exit 1
 fi
 case $CSR in
-   *.csr ) CERT="`echo $CSR | sed -e 's/\.csr/.crt/'`" ;;
+   *.csr ) CERT="(echo $CSR | sed -e 's/\.csr/.crt/')" ;;
        * ) CERT="$CSR.crt" ;;
 esac
 
@@ -67,7 +67,7 @@ emailAddress            = optional
 EOT
 
 #  sign the certificate
-if [ "x$CAPASS" = "x" ]; then
+if [ "$CAPASS" = "" ]; then
 	echo "No \$CAPASS present, will have to specify pass"
 	PASSIN=""
 else
@@ -76,12 +76,12 @@ else
 fi
 
 echo "CA signing: $CSR -> $CERT:"
-openssl ca -batch -config ca.config $PASSIN -out $CERT -infiles $CSR
+openssl ca -batch -config ca.config "$PASSIN" -out "$CERT" -infiles "$CSR"
 echo "CA verifying: $CERT <-> CA cert"
 if [ -f ca-chain.pem ]; then
-	openssl verify -CAfile ca-chain.pem $CERT
+	openssl verify -CAfile ca-chain.pem "$CERT"
 else
-	openssl verify -CAfile ca.crt $CERT
+	openssl verify -CAfile ca.crt "$CERT"
 fi
 
 #  cleanup after SSLeay

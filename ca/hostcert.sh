@@ -3,8 +3,11 @@
 # Recent version can be found here: https://github.com/ChrLau/scripts/blob/master/ca/hostcert.sh
 # Based on this: https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/
 
+# shellcheck disable=SC2034
+
 # Read the CA password, used by `sign.sh` later
-export CAPASS=$(cat ca.pass)
+CAPASS=$(cat ca.pass)
+export CAPASS
 
 if [ -f "$1.cnf" ]; then
         echo "Host: $1 already exists."
@@ -19,7 +22,8 @@ fi
 umask 066
 
 # Generate the certificate's password, and dump it.
-export PASS=$(xkcdpass -n 64)
+PASS=$(xkcdpass -n 64)
+export PASS
 
 if [ -z "$PASS" ]; then
         echo "Error: password empty; no xkcdpass?"
@@ -29,10 +33,11 @@ fi
 echo "$PASS" > "$1.pass"
 
 # Figure out what the hostname / altnames are, and confirm.
-echo "$1" | fgrep -q "."
+echo "$1" | grep -F -q "."
+# shellcheck disable=SC2181
 if [ $? -eq 0 ]; then
         CN="$1"
-        ALTNAMES="$@"
+        ALTNAMES="$*"
 else
         CN="$1.lan"
         ALTNAMES="$1.lan"
@@ -40,10 +45,11 @@ fi
 echo "CN: $CN"
 echo "ANs: $ALTNAMES"
 echo "Enter to confirm."
+# shellcheck disable=SC2162,SC2034
 read A
 
 # Generate the RSA key, unlock it into the "unsecure" file
-openssl genrsa -aes256 -passout env:PASS  -out "$1.key" ${SSL_KEY_SIZE-4096}
+openssl genrsa -aes256 -passout env:PASS  -out "$1.key" "${SSL_KEY_SIZE-4096}"
 openssl rsa -in "$1.key" -passin env:PASS -out "$1.unsecure.key"
 
 # Construct the CSR data
@@ -66,7 +72,7 @@ EOF
 I=1
 for AN in $ALTNAMES; do
         echo "DNS.$I = $AN" >> "$1.cnf"
-        I=$[$I + 1]
+        I=$((I + 1))
 done
 
 cat >> "$1.cnf" <<EOF
