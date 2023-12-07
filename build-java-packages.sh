@@ -12,7 +12,7 @@ function HELP {
   echo "Usage: $SCRIPT filename"
   echo ""
   echo "Currently only 1 filename is supported!"
-  exho ""
+  echo ""
   echo "Packages are created with normal version and an additional package with epoch version of 1:"
   echo "This is needed because of naming incompatibilities in the Java package ecosystem"
   exit 1

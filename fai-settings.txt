@@ -1,0 +1,18 @@
+type="install"
+partition="ONE_LVM"
+desktop=""
+suite="bookworm"
+keyboard="us"
+addpkgs="tmux htop mc unzip vim nmap sudo debconf-utils qemu-guest-agent"
+email=""
+rootpw=''
+username="clauf"
+userpw=''
+gittype=""
+gituser=""
+repo=""
+postinst="fai-prepare-user-env.sh"
+rclocal="1"
+cmdline=""
+options="SSH_SERVER STANDARD"
+root ssh key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA30xWzTNIcDu4UaE8DJ0Yofwlk73E7pE51NpBlu1ceL clauf

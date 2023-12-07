@@ -2,14 +2,17 @@
 
 # neutralize.sh
 # AUTHOR: Christian Lauf
+# Source: https://github.com/ChrLau/scripts/blob/master/network.sh
 # This script is useful is you want to "neutralize" some script. Ensuring that it can't be executed/changed.
 # Warning: As this script modifies timestamps and filerights it shouldn't be used as a forensic tool.
 
-CHMOD=/bin/chmod
-CHOWN=/bin/chown
-CHATTR=/usr/bin/chattr
-LSATTR=/usr/bin/lsattr
-STAT=/usr/bin/stat
+VERSION="1.0"
+SCRIPT="$(basename "0")"
+CHMOD="$(which chmod)"
+CHOWN="$(which chown)"
+CHATTR="$(which chattr)"
+LSATTR="$(which lsattr)"
+STAT="$(which stat)"
 
 if [ "$#" != "1" ]; then
         echo "Usage: $0 /path/to/file"
