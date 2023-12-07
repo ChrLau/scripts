@@ -22,11 +22,11 @@ echo "$CAPASS" > "ca.pass"
 openssl genrsa -aes256 -passout env:CAPASS  -out "ca.key" 4096
 
 # Strip the encryption off it; IOW, now they're are two things worth
-# protecting -- the `ca.pass` and `ca.key.unsecure`.
-openssl rsa -in "ca.key" -passin env:CAPASS -out "ca.key.unsecure"
+# protecting -- the `ca.pass` and `ca.unsecure.key`.
+openssl rsa -in "ca.key" -passin env:CAPASS -out "ca.unsecure.key"
 
 # At this point, you can decide whether to memorize `ca.pass` and
-# delete it along with `ca.key.unsecure`, or protect `ca.key.unsecure`
+# delete it along with `ca.unsecure.key`, or protect `ca.unsecure.key`
 # with your life, and maybe forget all about `ca.key` and `ca.pass`.
 #
 # (I'm sure you would have no trouble rewriting this to do away with
