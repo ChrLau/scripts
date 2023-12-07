@@ -5,6 +5,7 @@
 # Current version can be found here:
 # https://github.com/ChrLau/scripts/ca/blob/master/mk_pkcs12.sh
 
+# shellcheck disable=SC2181
 VERSION="1.0"
 SCRIPT=$(basename "$0")
 OPENSSL="$(command -v openssl)"
@@ -37,7 +38,7 @@ ssl_verify_cert2key() {
   if [ "$#" -lt 2 ]; then
     echo "Usage: ssl_verify_cert2key certificate privatekey";
   else
-    diff  <("$OPENSSL" x509 -in $2 -pubkey -noout) <("$OPENSSL" rsa -in $1 -pubout 2>/dev/null);
+    diff  <("$OPENSSL" x509 -in "$2" -pubkey -noout) <("$OPENSSL" rsa -in "$1" -pubout 2>/dev/null);
     if [ "$?" -eq 0 ];then
       echo "Certificate and PrivateKey match";
     else
