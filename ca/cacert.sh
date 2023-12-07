@@ -12,7 +12,8 @@ umask 066
 
 # Generate a CA password, because openssl (reasonably) wants to protect
 # the key material... and dump it to `ca.pass`.
-export CAPASS=$(xkcdpass -n 64)
+CAPASS=$(xkcdpass -n 64)
+export CAPASS
 
 if [ -z "$CAPASS" ]; then
         echo "Error: password empty; no xkcdpass?"
