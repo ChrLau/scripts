@@ -2,8 +2,10 @@
 # vim: set tabstop=2 smarttab shiftwidth=2 softtabstop=2 expandtab foldmethod=syntax :
 #
 # Small script to automate custom shell command execution
+# Current version can be found here:
+# https://github.com/ChrLau/scripts/blob/master/automation.sh
 
-VERSION="1.2"
+VERSION="1.3"
 SCRIPT=$(basename "$0")
 SSH=$(command -v ssh)
 # Colored output
