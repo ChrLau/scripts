@@ -3,6 +3,9 @@
 ##  sign.sh -- Sign a SSL Certificate Request (CSR)
 ##  Copyright (c) 1998-2001 Ralf S. Engelschall, All Rights Reserved.
 ##
+# Based on this: https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/
+# Originally taken from mod_ssl (http://www.modssl.org) see: https://fossies.org/linux/mod_ssl/pkg.contrib/sign.sh
+# My recent version can be found here: https://github.com/ChrLau/scripts/blob/master/ca/hostcert.sh
 
 #   argument line handling
 CSR=$1
