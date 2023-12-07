@@ -35,10 +35,10 @@ if [ ! -d "$PACKAGES_TMP_DIR" ]; then
 fi
 
 # Get and check for presence of needed binaries
-AR=$(which ar)
-TAR=$(which tar)
-FAKEROOT=$(which fakeroot)
-MAKEJPKG=$(which make-jpkg)
+AR=$(command -v ar)
+TAR=$(command -v tar)
+FAKEROOT=$(command -v fakeroot)
+MAKEJPKG=$(command -v make-jpkg)
 
 # Do this as function?
 #function CHECKBINARY($BINARYNAME) {

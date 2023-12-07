@@ -5,10 +5,10 @@
 # Current version can be found here:
 # https://github.com/ChrLau/scripts/blob/master/automation2.sh
 
-VERSION="1.3"
+VERSION="1.4"
 SCRIPT="$(basename "$0")"
-SSH="$(which ssh)"
-TEE="$(which tee)"
+SSH="$(command -v ssh)"
+TEE="$(command -v tee)"
 # Colored output
 RED="\e[31m"
 GREEN="\e[32m"
