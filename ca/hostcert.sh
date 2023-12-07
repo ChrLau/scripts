@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Recent version can be found here: https://github.com/ChrLau/scripts/blob/master/ca/hostcert.sh
+# Based on this: https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/
+
 # Read the CA password, used by `sign.sh` later
 export CAPASS=$(cat ca.pass)
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Recent version can be found here: https://github.com/ChrLau/scripts/blob/master/ca/cacert.sh
+# Based on this: https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/
+
 if [ -f "ca.cnf" ]; then
         echo "CA already exists."
         exit 1
