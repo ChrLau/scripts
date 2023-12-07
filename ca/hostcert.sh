@@ -41,7 +41,7 @@ read A
 
 # Generate the RSA key, unlock it into the "unsecure" file
 openssl genrsa -aes256 -passout env:PASS  -out "$1.key" ${SSL_KEY_SIZE-4096}
-openssl rsa -in "$1.key" -passin env:PASS -out "$1.key.unsecure"
+openssl rsa -in "$1.key" -passin env:PASS -out "$1.unsecure.key"
 
 # Construct the CSR data
 cat > "$1.cnf" <<EOF
@@ -83,5 +83,5 @@ openssl req -new -key "$1.key" -sha512 -passin env:PASS -config "$1.cnf" \
 ./sign.sh "$1.csr"
 
 # Optional: put both cert and key into a single `$1.pem` file
-#ruby -pe 'next unless /BEGIN/../END/' "$1.crt" "$1.key.unsecure" > "$1.pem"
+#ruby -pe 'next unless /BEGIN/../END/' "$1.crt" "$1.unsecure.key" > "$1.pem"
 
