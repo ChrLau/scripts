@@ -8,8 +8,8 @@ ICINGA2_API_HOST=ip.ip.ip.ip
 ICINGA2_API_PORT=
 
 SCRIPT="$(basename "$0")"
-JSON_PP="$(which json_pp)"
-CURL="$(which curl)"
+JSON_PP="$(command -v json_pp)"
+CURL="$(command -v curl)"
 
 # Test if curl is present and executeable
 if [ ! -x "$CURL" ]; then

@@ -3,9 +3,9 @@
 #
 # Small script to automate custom shell command execution
 
-VERSION="1.1"
+VERSION="1.2"
 SCRIPT=$(basename "$0")
-SSH=$(which ssh)
+SSH=$(command -v ssh)
 # Colored output
 RED="\e[31m"
 GREEN="\e[32m"
