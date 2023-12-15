@@ -2,7 +2,13 @@
 
 # This scripts determines the first IP which doesn't reply to ICMP-Pings and has an associated DNS-Record
 # This is used to generated the static network config /etc/network/interfaces
-VERSION="1.2"
+#
+# Script can be found here:
+# https://github.com/ChrLau/scripts/blob/master/network.sh
+
+# shellcheck disable=SC2034
+VERSION="1.3"
+# shellcheck disable=SC2034
 SCRIPT="$(basename "$0")"
 NMAP="$(command -v nmap)"
 
