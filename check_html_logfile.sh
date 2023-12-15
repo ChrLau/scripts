@@ -10,7 +10,8 @@
 # The current version of this script can be found here:
 # https://github.com/ChrLau/scripts/check_html_logfile.sh
 
-VERSION="1.1"
+# shellcheck disable=SC2034
+VERSION="1.2"
 STATUS_LOGFILE="/path/to/log/file.html"
 # For Testing:
 #STATUS_LOGFILE="/home/$USER/index.html"
@@ -33,8 +34,10 @@ STATUS_LOGFILE="/path/to/log/file.html"
 
 # Plugin Exit codes for Icinga:
 OK=0
+# shellcheck disable=SC2034
 WARN=1
 CRIT=2
+# shellcheck disable=SC2034
 UNKOWN=3
 
 # Check if logfile is readable
@@ -66,6 +69,9 @@ fi
 # Store the Order-ID from all failed orders listed on the status page (contains 1 month, so also old non-relevant/fixed errors)
 # We get the previous 4 lines also, so we can actually grep for the searchorderid
 # paste -s puts into a line without newlines and separates the values by a comma. So we can easily transform it into an array
+#
+# Disable SC1001 (info) as we DO want to look for a literal =
+# shellcheck disable=SC1001
 ERROR_ID="$(grep -B4 Misserfolg "$STATUS_LOGFILE"  | grep \&searchorderid\= | sed 's#.*searchorderid\=##' | sed 's#\&level\=.*##' |paste -s -d ',')"
 
 # Check if the length of the variable-content is zero
@@ -119,8 +125,8 @@ else
   #declare -p SOLVED_ERRORS_ARRAY
 
   # Print the whole array, concert to newline, run sort -u and concert newlines back to spaces
-  ERROR_ID_ARRAY=($(echo "${ERROR_ID_ARRAY[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
-  SOLVED_ERRORS_ARRAY=($(echo "${SOLVED_ERRORS_ARRAY[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+  ERROR_ID_ARRAY=("$(echo "${ERROR_ID_ARRAY[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
+  SOLVED_ERRORS_ARRAY=("$(echo "${SOLVED_ERRORS_ARRAY[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
 
   # Debug
   #echo "Arrays are unique"
@@ -131,7 +137,7 @@ else
   if [ "${#SOLVED_ERRORS_ARRAY[@]}" -ne 0 ]; then
 
     # Now we remove the searchorderids which were successful from the ERROR_ID_ARRAY
-    for SUCCESS in ${SOLVED_ERRORS_ARRAY[@]}; do
+    for SUCCESS in "${SOLVED_ERRORS_ARRAY[@]}"; do
 
       for ERROR in "${!ERROR_ID_ARRAY[@]}"; do
 
