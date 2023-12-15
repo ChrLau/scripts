@@ -105,7 +105,8 @@ if [ -r "$HOSTLIST" ]; then
   # Check that hostlist is not 0 bytes
   if [ -s "$HOSTLIST" ]; then
 
-    for HOST in $(cat "$HOSTLIST"); do
+    #for HOST in $(cat "$HOSTLIST"); do
+    while IFS= read -r HOST
 
       getent hosts "$HOST" &> /dev/null
 
@@ -138,7 +139,8 @@ if [ -r "$HOSTLIST" ]; then
         fi
       fi
 
-    done
+    #done
+    done < "$HOSTLIST"
 
   else
     echo -e "${RED}Hostlist \"$HOSTLIST\" is empty. Exiting.${ENDCOLOR}"
