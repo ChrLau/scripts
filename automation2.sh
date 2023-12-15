@@ -166,7 +166,7 @@ if [ -r "$HOSTLIST" ]; then
       # Log STDERR and STDOUT to $LOGFILE if specified
       if [ -n "$LOGFILE" ]; then
         echo -e "${GREEN}Connecting to $HOST ...${ENDCOLOR}" 2>&1 | tee -a "$LOGFILE"
-        ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "${COMMANDPART}" 2>&1 | tee -a "$LOGFILE"
+        ssh -n -o ConnectTimeout=10 "${SSH_PARAMS}" "$SSH_USER"@"$HOST" "${COMMANDPART}" 2>&1 | tee -a "$LOGFILE"
 
         # Test if ssh-command was successful
         # shellcheck disable=SC2181
@@ -185,7 +185,7 @@ if [ -r "$HOSTLIST" ]; then
       else
 
         echo -e "${GREEN}Connecting to $HOST ...${ENDCOLOR}"
-        ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "${COMMANDPART}"
+        ssh -n -o ConnectTimeout=10 "${SSH_PARAMS}" "$SSH_USER"@"$HOST" "${COMMANDPART}"
 
         # Test if ssh-command was successful
         # shellcheck disable=SC2181
