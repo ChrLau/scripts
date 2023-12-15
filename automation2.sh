@@ -155,8 +155,9 @@ if [ -r "$HOSTLIST" ]; then
     do
 
       getent hosts "$HOST" &> /dev/null
-
+      
       # getent returns exit code of 2 if a hostname isn't resolving
+      # shellcheck disable=SC2181
       if [ "$?" -ne 0 ]; then
         echo -e "${RED}Host: $HOST is not resolving. Typo? Aborting.${ENDCOLOR}"
         exit 2
@@ -168,6 +169,7 @@ if [ -r "$HOSTLIST" ]; then
         ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "${COMMANDPART}" 2>&1 | tee -a "$LOGFILE"
 
         # Test if ssh-command was successful
+        # shellcheck disable=SC2181
         if [ "$?" -ne 0 ]; then
           echo -n -e "${RED}Command was NOT successful on $HOST ... ${ENDCOLOR}" 2>&1 | tee -a "$LOGFILE"
 
@@ -186,6 +188,7 @@ if [ -r "$HOSTLIST" ]; then
         ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "${COMMANDPART}"
 
         # Test if ssh-command was successful
+        # shellcheck disable=SC2181
         if [ "$?" -ne 0 ]; then
           echo -n -e "${RED}Command was NOT successful on $HOST ... ${ENDCOLOR}"
 
