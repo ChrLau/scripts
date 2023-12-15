@@ -5,7 +5,7 @@
 # Current version can be found here:
 # https://github.com/ChrLau/scripts/blob/master/automation2.sh
 
-VERSION="1.4"
+VERSION="1.5"
 SCRIPT="$(basename "$0")"
 SSH="$(command -v ssh)"
 TEE="$(command -v tee)"
