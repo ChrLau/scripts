@@ -3,6 +3,9 @@
 #
 # set a downtime for the specified host and its services
 # default duration: 60 minutes (unless second parameter is given)
+#
+# Source can be found here:
+# https://github.com/ChrLau/scripts/blob/master/icinga2-downtime.sh
 
 if [ -z "$1" ]
 then
@@ -32,10 +35,10 @@ ICINGA_USER=''
 ICINGA_PASS=''
 
 DOWNTIME_START=$(date +%s)
-DOWNTIME_END=$(date +%s -d +${DURATION}minutes)
+DOWNTIME_END=$(date +%s -d +"${DURATION}"minutes)
 
 API_RESPONSE=$(curl -k -s \
-        -u $ICINGA_USER:$ICINGA_PASS \
+        -u "$ICINGA_USER":"$ICINGA_PASS" \
         -H 'Accept: application/json' \
         -X POST "https://$ICINGA_HOST:5665/v1/actions/schedule-downtime?host=${TARGET}&type=Service&filter=host.name==%22${TARGET}%22" \
     -d "{ \"start_time\": \"${DOWNTIME_START}\", \"end_time\": \"${DOWNTIME_END}\", \"duration\": ${DURATION}, \"author\": \"mon_ah\", \"comment\": \"${COMMENT}\" }" )
