@@ -2,7 +2,7 @@
 
 # This scripts determines the first IP which doesn't reply to ICMP-Pings and has an associated DNS-Record
 # This is used to generated the static network config /etc/network/interfaces
-VERSION="1.1"
+VERSION="1.2"
 SCRIPT="$(basename "$0")"
 NMAP="$(command -v nmap)"
 
@@ -15,10 +15,10 @@ fi
 FIRST_DOWN_HOST=$(nmap -v -sn -R 192.168.178.21-49 -oG - | grep -m1 -oP "^Host:[[:space:]]192\.168\.178\.[0-9]{2}[[:space:]]\([a-zA-Z0-9\-]+\.lan\)[[:space:]]Status: Down")
 #echo "FIRST_DOWN_HOST: $FIRST_DOWN_HOST"
 
-IP=$(awk '{print $2}' <<<$FIRST_DOWN_HOST)
+IP=$(awk '{print $2}' <<<"$FIRST_DOWN_HOST")
 #echo "IP: $IP"
 
-FQDN=$(awk -F'[()]' '{print $2}' <<<$FIRST_DOWN_HOST)
+FQDN=$(awk -F'[()]' '{print $2}' <<<"$FIRST_DOWN_HOST")
 #echo "FQDN: $FQDN"
 
 GATEWAY=$(ip -o -4 route show to default | awk '{print $3}')
@@ -58,16 +58,19 @@ NETWORKEOF
 
 # Set /etc/hosts
 # Only add if not already present
+# Shellcheck falsly thinks we are dealing with arrays here and prints an error..
+# shellcheck disable=SC1087
 grep -q "$IP[[:blank:]]$FQDN[[:blank:]]$HOST" /etc/hosts
 
+# shellcheck disable=2181
 if [ "$?" -ne 0 ]; then
-  echo "$IP\t$FQDN\t$HOST" >> /etc/hosts
+  printf "%s\t%s\t%s\n" "$IP" "$FQDN" "$HOST">> /etc/hosts
 else
   echo "/etc/hosts entry already present"
 fi
 
 # Set Hostname - only if variable is not empty
-if [ ! -z $FQDN ]; then
+if [ -n "$FQDN" ]; then
   echo "$FQDN" > /etc/hostname
 else
   echo "FQDN is empty"
