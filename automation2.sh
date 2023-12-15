@@ -27,7 +27,7 @@ fi
 
 function HELP {
   echo "$SCRIPT $VERSION: Execute custom shell commands on lists of hosts"
-  echo "Usage: $SCRIPT -l /path/to/host.list -c "command" [-u <user>] [-a <YES|NO>] [-r] [-s "options"] [-w "/path/to/logfile.log"]"
+  echo "Usage: $SCRIPT -l /path/to/host.list -c \"command\" [-u <user>] [-a <YES|NO>] [-r] [-s \"options\"] [-w \"/path/to/logfile.log\"]"
   echo ""
   echo "Parameters:"
   echo " -l   Path to the hostlist file, 1 host per line"
