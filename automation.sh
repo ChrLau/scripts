@@ -5,7 +5,7 @@
 # Current version can be found here:
 # https://github.com/ChrLau/scripts/blob/master/automation.sh
 
-VERSION="1.3"
+VERSION="1.4"
 SCRIPT=$(basename "$0")
 SSH=$(command -v ssh)
 # Colored output
