@@ -11,7 +11,7 @@
 # https://github.com/ChrLau/scripts/check_html_logfile.sh
 
 # shellcheck disable=SC2034
-VERSION="1.2"
+VERSION="1.3"
 STATUS_LOGFILE="/path/to/log/file.html"
 # For Testing:
 #STATUS_LOGFILE="/home/$USER/index.html"
@@ -104,6 +104,7 @@ else
     grep -A4 "$ID" "$STATUS_LOGFILE" | grep -q "<td style=\"color: green\;\">Erfolg</td>";
 
     # If exit code of grep is 0, an entry was found, add this searchorderid to the array
+    # shellcheck disable=SC2181
     if [ "$?" -eq 0 ]; then
 
       SOLVED_ERRORS_ARRAY+=("$ID")
