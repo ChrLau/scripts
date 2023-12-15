@@ -21,7 +21,7 @@ fi
 
 function HELP {
   echo "$SCRIPT $VERSION: Execute custom shell commands on lists of hosts"
-  echo "Usage: $SCRIPT -l /path/to/host.list -c "command" [-u <user>] [-a] [-r] [-s "options"]"
+  echo "Usage: $SCRIPT -l /path/to/host.list -c \"command\" [-u <user>] [-a] [-r] [-s \"options\"]"
   echo ""
   echo "Parameters:"
   echo " -l   Path to the hostlist file, 1 host per line"
@@ -110,6 +110,7 @@ if [ -r "$HOSTLIST" ]; then
       getent hosts "$HOST" &> /dev/null
 
       # getent returns exit code of 2 if a hostname isn't resolving
+      # shellcheck disable=SC2181
       if [ "$?" -ne 0 ]; then
         echo -e "${RED}Host: $HOST is not resolving. Typo? Aborting.${ENDCOLOR}"
         exit 2
@@ -118,12 +119,13 @@ if [ -r "$HOSTLIST" ]; then
       echo -e "${GREEN}Connecting to $HOST ...${ENDCOLOR}";
       # Execute command via sudo or not?
       if [ "$SUDO" = "YES" ]; then
-        ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "sudo su -c '${COMMAND}'";
+        ssh -n -o ConnectTimeout=10 "${SSH_PARAMS}" "$SSH_USER"@"$HOST" "sudo su -c '${COMMAND}'";
       else
-        ssh -n -o ConnectTimeout=10 ${SSH_PARAMS} "$SSH_USER"@"$HOST" "${COMMAND}";
+        ssh -n -o ConnectTimeout=10 "${SSH_PARAMS}" "$SSH_USER"@"$HOST" "${COMMAND}";
       fi
 
       # Test if command was successful
+      # shellcheck disable=SC2181
       if [ "$?" -ne 0 ]; then
         echo -n -e "${RED}Command was NOT successful on $HOST... ${ENDCOLOR}"
 
