@@ -61,11 +61,11 @@ keyUsage = critical, keyCertSign, cRLSign
 nameConstraints = permitted;DNS:lan
 
 [ req_distinguished_name ]
-C = DE
-L = Karlsruhe
-O = LAN CA
-CN = ca.lanadmin.lan
-emailAddress = lan-ca@brennt.net
+C = CountryCode
+L = Town
+O = Organization
+CN = ca.host.tld
+emailAddress = mail@example.com
 EOF
 
 # Do the deed -- generate the `ca.crt`, with 10 year (3650 days) validity
