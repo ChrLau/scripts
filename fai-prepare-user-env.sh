@@ -145,6 +145,9 @@ if [ ! -x "$NMAP" ]; then
   exit 2;
 fi
 
+# TODO: Scan network range starting from last IP. As existing VMs can be down and the current approach would result in a new system choosing this IP.
+# TODO: If scanning from the end of the range this should be prevented.
+#
 # -R is important, else no DNS-Resolution for hosts marked as DOWN
 FIRST_DOWN_HOST=$(nmap -v -sn -R 192.168.178.21-49 -oG - | grep -m1 -oP "^Host:[[:space:]]192\.168\.178\.[0-9]{2}[[:space:]]\([a-zA-Z0-9\-]+\.lan\)[[:space:]]Status: Down")
 #echo "FIRST_DOWN_HOST: $FIRST_DOWN_HOST"
