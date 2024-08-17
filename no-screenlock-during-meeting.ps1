@@ -4,12 +4,12 @@ $WShell = New-Object -Com "Wscript.shell"
 while (1) {
   # Check if the logonui process is running - which is only the case when the Lockscreen is up
   if ( Get-Process logonui -ErrorAction SilentlyContinue ) {
-    # Computer is locked, do nothing and check again
-    sleep 280;
+    # Computer is locked, do nothing
   } else {
-    # Computer is unlocked
+    # Computer is unlocked, press SCOLLLOCK key
     $WShell.SendKeys("{SCROLLLOCK}");
-    sleep 280;
   }
+  # Sleep for 280 seconds
+  sleep 280;
 }
 
