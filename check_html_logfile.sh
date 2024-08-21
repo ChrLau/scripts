@@ -11,7 +11,7 @@
 # https://github.com/ChrLau/scripts/check_html_logfile.sh
 
 # shellcheck disable=SC2034
-VERSION="1.3"
+VERSION="1.4"
 STATUS_LOGFILE="/path/to/log/file.html"
 # For Testing:
 #STATUS_LOGFILE="/home/$USER/index.html"
@@ -125,7 +125,7 @@ else
   #declare -p ERROR_ID_ARRAY
   #declare -p SOLVED_ERRORS_ARRAY
 
-  # Print the whole array, concert to newline, run sort -u and concert newlines back to spaces
+  # Print the whole array, convert spaces to newline, run sort -u and convert newlines back to spaces
   ERROR_ID_ARRAY=("$(echo "${ERROR_ID_ARRAY[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
   SOLVED_ERRORS_ARRAY=("$(echo "${SOLVED_ERRORS_ARRAY[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
 
