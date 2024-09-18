@@ -12,7 +12,7 @@ VERSION="1.0"
 # Values
 TELEGRAM_CHAT_ID=""
 TELEGRAM_BOT_TOKEN=""
-ISSO_COMMENTS_DB="/opt/isso/db/comments.db"
+ISSO_COMMENTS_DB=""
 # Needed binaries
 SQLITE3="$(command -v sqlite3)"
 CURL="$(command -v curl)"
@@ -22,8 +22,8 @@ RED="\e[31m"
 ENDCOLOR="\e[0m"
 
 # Check that variables are defined
-if [ -z "$TELEGRAM_CHAT_ID" ] || [ -z "$TELEGRAM_BOT_TOKEN" ]; then
-  echo "${RED}This script requires the TELEGRAM_CHAT_ID and TELEGRAM_BOT_TOKEN to be set. Define them at the top of this script.${ENDCOLOR}"
+if [ -z "$TELEGRAM_CHAT_ID" ] || [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$ISSO_COMMENTS_DB" ]; then
+  echo "${RED}This script requires the variables TELEGRAM_CHAT_ID, TELEGRAM_BOT_TOKEN and ISSO_COMMENTS_DB to be set. Define them at the top of this script.${ENDCOLOR}"
   exit 1;
 fi
 
