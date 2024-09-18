@@ -8,7 +8,7 @@ IFS=$'\n\t'
 
 # Generic
 VERSION="1.0"
-#SOURCE="https://github.com/ChrLau/scripts/check-isso-comments.sh"
+#SOURCE="https://github.com/ChrLau/scripts/blob/master/check-isso-comments.sh"
 # Values
 TELEGRAM_CHAT_ID=""
 TELEGRAM_BOT_TOKEN=""
