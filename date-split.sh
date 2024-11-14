@@ -1,4 +1,3 @@
-user@host:~$ cat date-split.sh
 #!/bin/bash
 # vim: set tabstop=2 smarttab shiftwidth=2 softtabstop=2 expandtab foldmethod=syntax :
 
