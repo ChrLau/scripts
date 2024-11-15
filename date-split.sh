@@ -1,4 +1,3 @@
-user@host:~$ cat date-split.sh
 #!/bin/bash
 # vim: set tabstop=2 smarttab shiftwidth=2 softtabstop=2 expandtab foldmethod=syntax :
 
@@ -8,7 +7,36 @@ user@host:~$ cat date-split.sh
 # Source: https://github.com/ChrLau/scripts/blob/master/date-split.sh
 
 LOGFILE="/var/log/unbound/unbound.log"
+DIRECTORY="$(dirname $LOGFILE)"
 GZIP="$(command -v gzip)"
+# Colored output
+RED="\e[31m"
+GREEN="\e[32m"
+ENDCOLOR="\e[0m"
+
+# Test if gzip is present and executeable
+if [ ! -x "$GZIP" ]; then
+  echo "${RED}This script requires gzip to compress the logfiles. Exiting.${ENDCOLOR}"
+  exit 1;
+fi
+
+# Check if logfile is readable
+if [ ! -r "$LOGFILE" ]; then
+  echo "${RED}$LOGFILE is not readable. Exiting.${ENDCOLOR}"
+  exit 1
+fi
+
+# Check that logfile is not 0 bytes
+if [ ! -s "$LOGFILE" ]; then
+  echo -e "${RED}Logfile $LOGFILE is empty. Exiting.${ENDCOLOR}"
+  exit 1
+fi
+
+# Check that we have write permissions for the directory
+if [ ! -w "$DIRECTORY" ]; then
+  echo -e "${RED}Directory $DIRECTORY is not writeable. Exiting.${ENDCOLOR}"
+  exit 1
+fi
 
 for YEAR in {2023..2024}; do
   for MONTH in {1..12}; do
