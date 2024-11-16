@@ -66,12 +66,19 @@ fi
 
       # Skip all the fuss and just use this:
       awk '$1 ~ /^\[[0-9]+]$/ {
-        f = "unbound-" strftime("%m-%Y", substr($1, 2, length($1)-2)) ".log"
-        if (f != prev) close(f); prev = f
+        f = "unbound-" strftime("%Y-%m", substr($1, 2, length($1)-2)) ".log"
+        if (f != prev) {
+            if (prev) system("gzip " prev)
+          close(prev)
+          prev = f
+        }
       }
       {
         print > f
-      }' "$LOGFILE"
+      }
+      END {
+        if (prev) system("gzip " prev)
+      }' unbound.log
 
       # Using grep, head and tail to get the first and last line from the timeframe
       # Bug: Fails if the timestamp isn't found in the logfile
