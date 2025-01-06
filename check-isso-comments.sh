@@ -7,7 +7,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # Generic
-VERSION="1.0"
+VERSION="1.1"
 #SOURCE="https://github.com/ChrLau/scripts/blob/master/check-isso-comments.sh"
 # Values
 TELEGRAM_CHAT_ID=""
@@ -47,14 +47,27 @@ fi
 
 COMMENT_COUNT=$(echo "select count(*) from comments where mode == 2" | sqlite3 "${ISSO_COMMENTS_DB}")
 
-TEMPLATE=$(cat <<TEMPLATE
-<strong>ISSO Comment checker</strong>
-
-<pre>${COMMENT_COUNT} comments need approval</pre>
-TEMPLATE
-)
-
 if [ "${COMMENT_COUNT}" -gt 0 ]; then
+
+  COMMENT_IDS=$(echo "select id from comments where mode == 2" | sqlite3 "${ISSO_COMMENTS_DB}")
+
+  for ID in ${COMMENT_IDS}; do
+
+    COMMENT_AUTHOR=$(echo "select author from comments where mode == 2 and id == $ID" | sqlite3 "${ISSO_COMMENTS_DB}")
+    COMMENT_TEXT=$(echo "select text from comments where mode == 2 and id == $ID" | sqlite3 "${ISSO_COMMENTS_DB}")
+    COMMENT_STRING+="Comment $ID from $COMMENT_AUTHOR:<pre>$COMMENT_TEXT</pre>"
+
+  done
+
+  TEMPLATE=$(cat <<TEMPLATE
+<strong>ISSO Comment checker</strong>
+${COMMENT_COUNT} new comments need approval
+
+${COMMENT_STRING}
+TEMPLATE
+  )
+
+  echo "TEMPLATE: $TEMPLATE"
 
   /usr/bin/curl --silent --output /dev/null \
     --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
