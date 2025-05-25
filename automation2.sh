@@ -5,7 +5,20 @@
 # Current version can be found here:
 # https://github.com/ChrLau/scripts/blob/master/automation2.sh
 
-VERSION="1.5"
+# Bash strict mode
+#  read: http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
+# Set pipefail variable
+# As we use "ssh command | tee" and tee will always succeed our check for non-zero exit-codes doesn't work
+#
+# The exit status of a pipeline is the exit status of the last command in the pipeline,
+#  unless the pipefail option is enabled (see: The Set Builtin).
+# If pipefail is enabled, the pipeline's return status is the value of the last (rightmost)
+#  command to exit with a non-zero status, or zero if all commands exit successfully.
+
+VERSION="1.6"
 SCRIPT="$(basename "$0")"
 SSH="$(command -v ssh)"
 TEE="$(command -v tee)"
@@ -112,15 +125,6 @@ fi
 
 # If variable logfile is not empty
 if [ -n "$LOGFILE" ]; then
-
-  # Set pipefail variable
-  # As we use "ssh command | tee" and tee will always succeed our check for non-zero exit-codes doesn't work
-  #
-  # The exit status of a pipeline is the exit status of the last command in the pipeline,
-  #  unless the pipefail option is enabled (see: The Set Builtin).
-  # If pipefail is enabled, the pipeline's return status is the value of the last (rightmost)
-  #  command to exit with a non-zero status, or zero if all commands exit successfully.
-  set -o pipefail
 
   # Check if logfile is not present
   if [ ! -e "$LOGFILE" ]; then
