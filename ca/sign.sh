@@ -16,7 +16,7 @@ if [ ! -f "$CSR" ]; then
     echo "CSR not found: $CSR"; exit 1
 fi
 case $CSR in
-   *.csr ) CERT="(echo $CSR | sed -e 's/\.csr/.crt/')" ;;
+   *.csr ) CERT="$(echo $CSR | sed -e 's/\.csr/.crt/')" ;;
        * ) CERT="$CSR.crt" ;;
 esac
 
@@ -76,7 +76,7 @@ else
 fi
 
 echo "CA signing: $CSR -> $CERT:"
-openssl ca -batch -config ca.config "$PASSIN" -out "$CERT" -infiles "$CSR"
+openssl ca -batch -config ca.config $PASSIN -out "$CERT" -infiles "$CSR"
 echo "CA verifying: $CERT <-> CA cert"
 if [ -f ca-chain.pem ]; then
 	openssl verify -CAfile ca-chain.pem "$CERT"

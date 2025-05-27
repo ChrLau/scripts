@@ -7,6 +7,7 @@
 
 # Read the CA password, used by `sign.sh` later
 CAPASS=$(cat ca.pass)
+echo $CAPASS
 export CAPASS
 
 if [ -f "$1.cnf" ]; then
