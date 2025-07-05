@@ -16,7 +16,8 @@ if [ -f "$1.cnf" ]; then
 fi
 
 if [ -z "$1" ]; then
-        echo "Error: No hostname given"
+        echo "Error: No hostname given. Please ensure the common name (CN) is given as first argument."
+	echo "List additional DNS, IPv4 or IPv6 Altnames after the first argument, separated by spaces"
         exit 1
 fi
 
@@ -33,18 +34,27 @@ fi
 
 echo "$PASS" > "$1.pass"
 
-# Figure out what the hostname / altnames are, and confirm.
-echo "$1" | grep -F -q "."
-# shellcheck disable=SC2181
-if [ $? -eq 0 ]; then
-        CN="$1"
-        ALTNAMES="$*"
+# If first argument includes dots use that FQDN as CN for the cert
+#  else add the domain
+if echo "$1" | grep -F -q "."; then
+	CN="$1"
 else
-        CN="$1.lan"
-        ALTNAMES="$1.lan"
+	CN="$1.lan"
 fi
+
+# Check if Altname is an IPv4 or IPv6 (yeah.. very basic check..)
+#  so we can set the proper x509v3 extension
+for ALTNAME in $*; do
+  if [[ $ALTNAME =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ || $ALTNAME =~ \.*:\.* ]]; then
+    IP_ALTNAMES+=("$ALTNAME")
+  else
+    DNS_ALTNAMES+=("$ALTNAME")
+  fi
+done
+
 echo "CN: $CN"
-echo "ANs: $ALTNAMES"
+echo "DNS ANs: ${DNS_ALTNAMES[@]}"
+echo "IP ANs: ${IP_ALTNAMES[@]}"
 echo "Enter to confirm."
 # shellcheck disable=SC2162,SC2034
 read A
@@ -70,12 +80,17 @@ subjectAltName = @alt_names
 [alt_names]
 EOF
 
+N=1
 I=1
-for AN in $ALTNAMES; do
-        echo "DNS.$I = $AN" >> "$1.cnf"
-        I=$((I + 1))
+for DNSAN in ${DNS_ALTNAMES[@]}; do
+        echo "DNS.$N = $DNSAN" >> "$1.cnf"
+        N=$((N + 1))
 done
 
+for IPAN in ${IP_ALTNAMES[@]}; do
+	echo "IP.$I = $IPAN" >> "$1.cnf"
+	I=$((I + 1))
+done
 cat >> "$1.cnf" <<EOF
 
 [ req_distinguished_name ]
