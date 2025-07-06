@@ -42,16 +42,18 @@ else
 	CN="$1.lan"
 fi
 
-# Check if Altname is an IPv4 or IPv6 (yeah.. very basic check..)
-#  so we can set the proper x509v3 extension
+# Check if Altname is an IPv4 or IPv6 - so we can set the proper x509v3 extension
+# Note: Everything which doesn't match the IPv4 or IPv6 RegEx is treated as DNS altname!
 for ALTNAME in $*; do
-  if [[ $ALTNAME =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ || $ALTNAME =~ \.*:\.* ]]; then
+  if [[ $ALTNAME =~ ^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$ || $ALTNAME =~ ^((:(:[0-9A-Fa-f]{1,4}){1,7}|::|[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){1,6}|::|:[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){1,5}|::|:[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){1,4}|::|:[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){1,3}|::|:[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){1,2}|::|:[0-9A-Fa-f]{1,4}(::[0-9A-Fa-f]{1,4}|::|:[0-9A-Fa-f]{1,4}(::|:[0-9A-Fa-f]{1,4}))))))))|(:(:[0-9A-Fa-f]{1,4}){0,5}|[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){0,4}|:[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){0,3}|:[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4}){0,2}|:[0-9A-Fa-f]{1,4}(:(:[0-9A-Fa-f]{1,4})?|:[0-9A-Fa-f]{1,4}(:|:[0-9A-Fa-f]{1,4})))))):(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3})$ ]]; then
+  #if [[ $ALTNAME =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ || $ALTNAME =~ \.*:\.* ]]; then
     IP_ALTNAMES+=("$ALTNAME")
   else
     DNS_ALTNAMES+=("$ALTNAME")
   fi
 done
 
+# TODO: Add DNS check against all DNS Altnames (CN is always part of DNS Altnames)
 echo "CN: $CN"
 echo "DNS ANs: ${DNS_ALTNAMES[@]}"
 echo "IP ANs: ${IP_ALTNAMES[@]}"
