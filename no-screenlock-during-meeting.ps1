@@ -1,7 +1,7 @@
 # Press the Scrolllock-Key every 280 seconds to prevent the automatic screen locking
 
 # Check Powershell Executionpolicy
-if ( $(Get-Executionpolicy) -eq "Unrestricted" ) {
+if ( $(Get-Executionpolicy) -eq "Restricted" ) {
   Write-Host "This script doesn't work with an ExecutionPolicy of Restricted. Aborting."
 }
 
