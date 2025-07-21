@@ -1,3 +1,10 @@
+# Press the Scrolllock-Key every 280 seconds to prevent the automatic screen locking
+
+# Check Powershell Executionpolicy
+if ( $(Get-Executionpolicy) -eq "Unrestricted" ) {
+  Write-Host "This script doesn't work with an ExecutionPolicy of Restricted. Aborting."
+}
+
 # If the computer isn't locked:
 # Press the Scrolllock-Key every 280 seconds to prevent the automatic screen locking
 $WShell = New-Object -Com "Wscript.shell"
