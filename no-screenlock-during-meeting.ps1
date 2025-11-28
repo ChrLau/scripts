@@ -5,6 +5,11 @@ if ( $(Get-Executionpolicy) -eq "Restricted" ) {
   Write-Host "This script doesn't work with an ExecutionPolicy of Restricted. Aborting."
 }
 
+# Check LanguageMode
+if ( $ExecutionContext.SessionState.LanguageMode -eq "ConstrainedLanguage") {
+  Write-Host "This script doesn't work in ConstrainedLanguage mode. Aborting."
+}
+
 # If the computer isn't locked:
 # Press the Scrolllock-Key every 280 seconds to prevent the automatic screen locking
 $WShell = New-Object -Com "Wscript.shell"
