@@ -2,7 +2,7 @@
 
 # Recent version can be found here: https://github.com/ChrLau/scripts/blob/master/ca/cacert.sh
 # Based on this: https://wejn.org/2023/09/running-ones-own-root-certificate-authority-in-2023/
-
+# Make sure to 
 if [ -f "ca.cnf" ]; then
         echo "CA already exists."
         exit 1
@@ -57,8 +57,14 @@ basicConstraints = critical, CA:TRUE, pathlen:0
 # and its subdomains, but not `critical` in case it's not supported
 # by some device.
 # h/t https://news.ycombinator.com/item?id=37538084
+#
+# Documentation for nameConstraints:
+# https://docs.openssl.org/1.0.2/man1/x509v3_config/#name-constraints
 keyUsage = critical, keyCertSign, cRLSign
-nameConstraints = permitted;DNS:lan
+# Comment out, to use:
+#nameConstraints = permitted;IP:192.168.0.0/255.255.0.0
+# Allow host.domain and all subdomains under .host.domain and IPs in that subnet
+#nameConstraints = permitted;DNS:host.domain, permitted;DNS:.host.domain, permitted;IP:192.168.0.0/255.255.0.0
 
 [ req_distinguished_name ]
 C = CountryCode
