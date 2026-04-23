@@ -124,7 +124,7 @@ if [ "$?" -eq 0 ]; then
     HOMEDIR=$(getent passwd $DOTFILEUSER | cut -d: -f6 )
 
     # Symlink dotfiles
-    ln -s /home/clauf/git/github/chrlau/dotfiles/.tmuxrc $HOMEDIR/.tmuxrc
+    ln -s /home/clauf/git/github/chrlau/dotfiles/.tmux.conf $HOMEDIR/.tmux.conf
     ln -s /home/clauf/git/github/chrlau/dotfiles/.htoprc $HOMEDIR/.htoprc
     ln -s /home/clauf/git/github/chrlau/dotfiles/.screenrc $HOMEDIR/.screenrc
     ln -s /home/clauf/git/github/chrlau/dotfiles/.vimrc $HOMEDIR/.vimrc
