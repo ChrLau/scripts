@@ -8,7 +8,8 @@
 # Usage:
 #   extract_rpm.sh <package.rpm> [target_dir]
 #
-# If no target_dir is given, the rpm-filename will be used to createw a target directory
+# If no target_dir is given, the rpm-filename will be used to createw a target directory in the current directory
+#
 # Source:
 # https://github.com/ChrLau/scripts/blob/master/extract_rpm.sh
 
@@ -29,7 +30,7 @@ extract_rpm() {
 
    if [ -z "$RPM_FILE" ]; then
     echo "Usage: extract_rpm <package.rpm> [target_dir]"
-    echo "  If [target_dir] is omitted, the filename will be used as directoryname to be created."
+    echo "  If [target_dir] is omitted, the filename will be used as directory name to be created in the current directory."
     return 1
   fi
 
