@@ -6,7 +6,7 @@
 # as separate .txt files.
 #
 # Usage:
-#   extract-rpm.sh <package.rpm> [target_dir]
+#   extract_rpm.sh <package.rpm> [target_dir]
 #
 # If no target_dir is given, the rpm-filename will be used to createw a target directory
 # Source:
