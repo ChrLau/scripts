@@ -1,5 +1,5 @@
 # PowerShell script to list the size (in GB/MB) of directories, similar to the Linux "du" command
-# Source:
+# Source: https://github.com/ChrLau/scripts/blob/master/Get-FolderSize.ps1
 # 
 # In orde to add this function to our PowerShell profile, do:
 # 1. New-Item -ItemType File -Path $PROFILE -Force
