@@ -18,6 +18,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+VERSION="1.0"
+SCRIPT="$(basename "$0")"
+
 # Colored output
 RED="\e[31m"
 GREEN="\e[32m"
@@ -25,24 +28,35 @@ YELLOW="\e[33m"
 ENDCOLOR="\e[0m"
 
 extract_rpm() {
-  RPM_FILE="$1"
-  DEST_DIR="$2"
 
-   if [ -z "$RPM_FILE" ]; then
-    echo "Usage: extract_rpm <package.rpm> [target_dir]"
-    echo "  If [target_dir] is omitted, the filename will be used as directory name to be created in the current directory."
+  # No arguments or more than two? Print help
+  if [ "$#" -eq 0 ] || [ "$#" -gt 2 ]; then
+    echo "$SCRIPT $VERSION: Extract RPM-Packages, including all scripts, into a separate directory"
+    echo ""
+    echo "Usage: $SCRIPT package.rpm [target_dir]"
+    echo "  If [target_dir] is omitted, ./package_extracted will be used as [target_dir]."
+    echo "  Example:"
+    echo "    blafoo-1.2.3-4.noarch.rpm will be extracted to: ./blafoo-1.2.3-4.noarch_extracted"
     return 1
   fi
 
-  if [[ ! -f "$RPM_FILE" ]]; then
-    echo -e "${RED}Error: file $RPM_FILE not found.${ENDCOLOR}"
-    return 1
-  fi
+  # remember the absolute path before we change directories
+  RPM_FILE="$(readlink -f "$1")"
 
+  BASE_NAME="$(basename "$RPM_FILE" .rpm)"
+
+  # second argument is optional, otherwise derive from the package name
+  DEST_DIR="${2:-./${BASE_NAME}_extracted}"
+
+  echo -e "${YELLOW}${1} will be extracted to: ${DEST_DIR}${ENDCOLOR}"
+
+  # Validate RPM-File
   if ! rpm -qp --info "$RPM_FILE" > /dev/null 2>&1; then
     echo -e "${RED}Error: file $RPM_FILE is not a valid RPM file.${ENDCOLOR}"
+    return 1
   fi
 
+  # Check tooling
   for cmd in rpm rpm2cpio cpio; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
       echo -e "${RED}Error: required tool is not installed: $cmd${ENDCOLOR}"
@@ -50,28 +64,18 @@ extract_rpm() {
     fi
   done
 
-  # remember the absolute path before we change directories
-  RPM_FILE="$(readlink -f "$RPM_FILE")"
-
-  # Get package filename
-  BASE_NAME="$(basename "$RPM_FILE" .rpm)"
-
-  # determine target directory
-  if [[ -z "$DEST_DIR" ]]; then
-    DEST_DIR="./${BASE_NAME}_extracted"
-  fi
-
   mkdir -p "$DEST_DIR/contents" "$DEST_DIR/scripts" || {
     echo -e "${RED}Error: could not create target directory $DEST_DIR.${ENDCOLOR}"
     return 1
   }
 
   echo -e "${GREEN}==> Extracting file contents into $DEST_DIR/contents ...${ENDCOLOR}"
-  (
+
+  # Start in subshell because cpio supports no parameter to specify where to extract the contents to
+  if ! (
     cd "$DEST_DIR/contents" || exit 1
     rpm2cpio "$RPM_FILE" | cpio -idmv 2>&1
-  )
-  if [[ $? -ne 0 ]]; then
+  ); then
     echo -e "${YELLOW}Warning: rpm2cpio/cpio may have reported errors.${ENDCOLOR}"
   fi
 
